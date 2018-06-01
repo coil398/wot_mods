@@ -9,6 +9,8 @@ def post_result_to_discord(isPlayerVehicle, results):
     if isPlayerVehicle:
         modifiedResults = copy.deepcopy(results)
         json.dumps(_JSON_Encode(modifiedResults))
+    else:
+        pass
 
 def _JSON_Encode(obj):
     if isinstance(obj, dict):
@@ -18,6 +20,15 @@ def _JSON_Encode(obj):
                 newDict[str(key)] = _JSON_Encode(value)
             else:
                 newDict[key] = _JSON_Encode(value)
+
+        return newDict
+    if isinstance(obj, list) or isinstance(obj, tuple) or isinstance(obj, set):
+        newList = []
+        for value in obj:
+            newList.append(_JSON_Encode(value))
+
+        return newList
+    return obj
 
 def __onAccountBecomePlayer():
     SystemMessages.pushMessage('Hello World', type=SM_TYPE.GameGreeting)
