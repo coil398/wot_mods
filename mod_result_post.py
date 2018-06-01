@@ -15,6 +15,7 @@ url = 'https://discordapp.com/api/webhooks/452188196533436418/6AE7DIRLZ9VyNJ26z1
 def post_result_to_discord(isPlayerVehicle, results):
     if isPlayerVehicle:
         modifiedResults = copy.deepcopy(results)
+        modifiedResults = json.dumps(modifiedResults)
         obj = {'username': 'bot',
                'content': modifiedResults}
         http.request('POST', url, obj)
