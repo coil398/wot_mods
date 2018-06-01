@@ -2,15 +2,23 @@ from account_helpers import BattleResultsCache
 from gui import SystemMessages
 from gui.SystemMessages import SM_TYPE
 from PlayerEvents import g_playerEvents
-import requests
-import json
+# import requests
+# import json
+import urllib3
 import copy
+
+
+http = urllib3.PoolManager()
+url = 'https://discordapp.com/api/webhooks/452188196533436418/6AE7DIRLZ9VyNJ26z1VmikajVqO7ItQbr3wOKC2bLgMb_qjCeDexlSKb8E-rbzlZjcv_'
 
 
 def post_result_to_discord(isPlayerVehicle, results):
     if isPlayerVehicle:
         modifiedResults = copy.deepcopy(results)
-        json.dumps(_JSON_Encode(modifiedResults))
+        obj = {'username': 'bot',
+               'content': modifiedResults}
+        http.request('POST', url, obj)
+        # json.dumps(_JSON_Encode(modifiedResults))
     else:
         pass
 
@@ -39,15 +47,15 @@ def __onAccountBecomePlayer():
 
 
 def post_to_discord():
-    url = 'https://discordapp.com/api/webhooks/452188196533436418/6AE7DIRLZ9VyNJ26z1VmikajVqO7ItQbr3wOKC2bLgMb_qjCeDexlSKb8E-rbzlZjcv_'
-    method = 'POST'
+    # url = 'https://discordapp.com/api/webhooks/452188196533436418/6AE7DIRLZ9VyNJ26z1VmikajVqO7ItQbr3wOKC2bLgMb_qjCeDexlSKb8E-rbzlZjcv_'
     obj = {"username": "bot",
               "content": "launched world of tanks."}
-    headers = {"Content-Type": "application/json"}
-    json_data = json.dumps(obj)
+    # headers = {"Content-Type": "application/json"}
+    # json_data = json.dumps(obj)
 
-    result = requests.post(url, data=json_data, headers=headers)
-    print(result.status_code)
+    # result = requests.post(url, data=json_data, headers=headers)
+    # print(result.status_code)
+    http.request('POST', url, obj)
 
 
 def init():
