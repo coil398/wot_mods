@@ -1,6 +1,7 @@
 from account_helpers import BattleResultsCache
 from gui import SystemMessages
 from gui.SystemMessages import SM_TYPE
+from PlayerEvents import g_playerEvents
 import json
 import copy
 
